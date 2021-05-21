@@ -10,11 +10,13 @@ import { usePlayer } from "../hooks/usePlayer";
 import { useStage } from "../hooks/useStage";
 import { useInterval } from "../hooks/useInterval";
 import { useGameStatus } from "../hooks/useGameStatus";
+import { useNextgrid } from "../hooks/useNextGrid";
 
 // Components
 import Stage from "./Stage";
 import Display from "./Display";
 import StartButton from "./StartButton";
+import NextShape from "./NextShape";
 
 const Tetris = () => {
   const [dropTime, setDropTime] = useState(null);
@@ -24,9 +26,7 @@ const Tetris = () => {
   const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
   const [score, setScore, rows, setRows, level, setLevel] =
     useGameStatus(rowsCleared);
-
-  console.log("re-render");
-
+  const [grid] = useNextgrid()
   const movePlayer = (dir) => {
     if (!checkCollision(player, stage, { x: dir, y: 0 })) {
       updatePlayerPos({ x: dir, y: 0 });
@@ -64,30 +64,28 @@ const Tetris = () => {
     }
   };
 
-  const keyUp = ({ keyCode }) => {
+  const keyUp = ({ code }) => {
     if (!gameOver) {
-      if (keyCode === 40) {
+      if (code === "ArrowDown") {
         setDropTime(1000 / (level + 1) + 200);
       }
     }
   };
 
   const dropPlayer = () => {
-    console.log("interval off");
     setDropTime(null);
     drop();
   };
 
-  const move = ({ keyCode }) => {
-    console.log(keyCode);
+  const move = ({ code }) => {
     if (!gameOver) {
-      if (keyCode === 37) {
+      if (code === "ArrowLeft") {
         movePlayer(-1);
-      } else if (keyCode === 39) {
+      } else if (code === "ArrowRight") {
         movePlayer(1);
-      } else if (keyCode === 40) {
+      } else if (code === "ArrowDown") {
         dropPlayer();
-      } else if (keyCode === 38) {
+      } else if (code === "ArrowUp") {
         playerRotate(stage, 1);
       }
     }
@@ -111,12 +109,13 @@ const Tetris = () => {
             <Display gameOver={gameOver} text="Game Over" />
           ) : (
             <div>
-              <Display text={`Score: ${score}`} />
               <Display text={`Rows: ${rows}`} />
               <Display text={`Level: ${level}`} />
             </div>
           )}
+          <Display text={`Score: ${score}`} />
           <StartButton callback={startGame} />
+          <NextShape nextGrid={grid} />
         </aside>
       </StyledTetris>
     </StyledTetrisWrapper>
