@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 
 export const useTetromino = () => {
   const [count, setCount] = useState(7);
-  const [nextTetro,setNextTetro] = useState()
+  // const [nextTetro,setNextTetro] = useState()
   const [tetromino, setTetromino] = useState([
     "I",
     "J",

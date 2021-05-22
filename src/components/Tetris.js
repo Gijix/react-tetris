@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { createStage, checkCollision } from "../gameHelpers";
 
@@ -11,32 +11,57 @@ import { useStage } from "../hooks/useStage";
 import { useInterval } from "../hooks/useInterval";
 import { useGameStatus } from "../hooks/useGameStatus";
 import { useNextgrid } from "../hooks/useNextGrid";
+import { useSound } from "use-sound";
 
 // Components
 import Stage from "./Stage";
 import Display from "./Display";
 import StartButton from "./StartButton";
 import NextShape from "./NextShape";
+import PlayMusic from "./PlayMusic";
+
+import TetrisMusic from '../sound/TetrisMusic.wav'
+
+import sound from "../img/sound.png";
+import stopSound from "../img/stopSound.png";
+
 
 const Tetris = () => {
   const [dropTime, setDropTime] = useState(null);
   const [gameOver, setGameOver] = useState(false);
+  const [music, setMusic] = useState(false);
+  const [play,{stop}] = useSound(TetrisMusic,{volume : 0.1})
+  const [icon,setIcon] = useState(stopSound)
 
   const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer();
   const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
   const [score, setScore, rows, setRows, level, setLevel] =
     useGameStatus(rowsCleared);
-  const [grid] = useNextgrid()
+  const [grid] = useNextgrid();
   const movePlayer = (dir) => {
     if (!checkCollision(player, stage, { x: dir, y: 0 })) {
       updatePlayerPos({ x: dir, y: 0 });
     }
   };
+  useEffect(() => {
+    if (music) {
+      setIcon(sound)
+      play()
+    } else {
+      setIcon(stopSound)
+      stop()
+    }
+  }, [music]);
+
+  const inverseMusic = () => {
+    setMusic(!music)
+  }
 
   const startGame = () => {
     // Reset everything
     setStage(createStage());
     setDropTime(1000);
+    setMusic(true);
     resetPlayer();
     setGameOver(false);
     setScore(0);
@@ -103,6 +128,7 @@ const Tetris = () => {
       onKeyDown={(e) => move(e)}
     >
       <StyledTetris>
+        <PlayMusic icon={icon} inverseMusic={inverseMusic}/>
         <Stage stage={stage} />
         <aside>
           {gameOver ? (

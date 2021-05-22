@@ -3,7 +3,6 @@ import Cell from "./Cell";
 import React from 'react'
 
 const NextShape = ({ nextGrid }) => {
-  console.log(nextGrid[0].length,nextGrid.length);
   return (
     <StyledNextShape>
       <StyledNextgrid width={nextGrid[0].length} height={nextGrid.length}>
