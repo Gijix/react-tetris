@@ -1,4 +1,4 @@
-import { TETROMINOS } from "../tetrominos";
+import { TETROMINOS, Tetro } from "../tetrominos";
 import { useCallback, useState } from "react";
 
 export const useTetromino = () => {
@@ -32,6 +32,6 @@ export const useTetromino = () => {
       setCount(1);
       return (TETROMINOS as Record<string, any>)[tetromino[0]];
     }
-  },[tetromino]);
+  },[tetromino, count]);
   return [getTetromino, count] as const;
 };

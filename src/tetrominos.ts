@@ -31,5 +31,9 @@ export const TETROMINOS = {
   },
 };
 
-export type tetrokey = ['I', 'J', 'L', 'O', 'S', 'T', 'Z']
+export type tetrokey = 'I' | 'J' | 'L' | 'O' | 'S' | 'T' | 'Z'
+export interface Tetro {
+  shape: (string | 0 )[][],
+  color: string
+}
 

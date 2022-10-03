@@ -124,7 +124,7 @@ const Tetris = () => {
       role="button"
       tabIndex={0}
       onKeyUp={keyUp}
-      onKeyDown={(e) => move(e)}
+      onKeyDown={move}
     >
       <StyledTetris>
         <PlayMusic icon={icon} inverseMusic={inverseMusic}/>
@@ -140,7 +140,7 @@ const Tetris = () => {
           )}
           <Display text={`Score: ${score}`} />
           <StartButton callback={startGame} />
-          <NextShape nextGrid={grid} />
+          <NextShape nextGrid={grid} player={player} />
         </aside>
       </StyledTetris>
     </StyledTetrisWrapper>

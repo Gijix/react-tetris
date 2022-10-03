@@ -6,12 +6,12 @@ import { checkCollision, STAGE_WIDTH } from "../gameHelpers";
 
 export interface IPlayer {
   pos: { x: number, y: number}
-  tetromino: number[][],
+  tetromino: (number | string)[][],
   collided: boolean
 }
 
 export const usePlayer = () => {
-  const [player, setPlayer] = useState({
+  const [player, setPlayer] = useState<IPlayer>({
     pos: { x: 0, y: 0 },
     tetromino: TETROMINOS[0].shape,
     collided: false,
@@ -21,7 +21,7 @@ export const usePlayer = () => {
   // useEffect(() => {
 
   // })
-  const rotate = (matrix: [number, string][][], dir: number) => {
+  const rotate = (matrix: (number | string) [][], dir: number) => {
     // Make the rows to become cols (transpose)
     const rotatedTetro = matrix.map((_, index) =>
       matrix.map((col) => col[index])
@@ -32,7 +32,7 @@ export const usePlayer = () => {
   };
 
   const playerRotate = (stage: [number, string][][], dir: number) => {
-    const clonedPlayer = JSON.parse(JSON.stringify(player));
+    const clonedPlayer = JSON.parse(JSON.stringify(player)) as typeof player;
     clonedPlayer.tetromino = rotate(clonedPlayer.tetromino, dir);
 
     const pos = clonedPlayer.pos.x;
@@ -64,7 +64,7 @@ export const usePlayer = () => {
       tetromino: getTetromino().shape,
       collided: false,
     });
-  }, [count,getTetromino]);
+  }, [getTetromino]);
 
   return [player, updatePlayerPos, resetPlayer, playerRotate] as const;
 };

@@ -32,7 +32,7 @@ export const useStage = (player: IPlayer, resetPlayer: () => void) => {
         row.forEach((value, x) => {
           if (value !== 0) {
             newStage[y + player.pos.y][x + player.pos.x] = [
-              value,
+              value as number,
               `${player.collided ? "merged" : "clear"}`,
             ];
           }
