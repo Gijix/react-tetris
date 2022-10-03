@@ -1,7 +1,7 @@
-import React from 'react';
+import { FC } from 'react';
 import Tetris from './components/Tetris';
 
-const App = () => (
+const App: FC = () => (
   <div className="App">
     <Tetris />
   </div>

@@ -1,7 +1,7 @@
 import { StyledPlayMusic } from "./styles/StyledPlayMusic";
-import React from "react";
+import { FC } from "react";
 
-const PlayMusic = ({ inverseMusic,icon }) => {
+const PlayMusic: FC<{ inverseMusic: () => void, icon: string}> = ({ inverseMusic, icon }) => {
 
   return (
     <StyledPlayMusic onClick={inverseMusic}>

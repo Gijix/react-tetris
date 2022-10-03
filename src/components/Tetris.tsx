@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { createStage, checkCollision } from "../gameHelpers";
 
@@ -21,13 +21,12 @@ import NextShape from "./NextShape";
 import PlayMusic from "./PlayMusic";
 
 import TetrisMusic from '../sound/TetrisMusic.wav'
-
 import sound from "../img/sound.png";
 import stopSound from "../img/stopSound.png";
 
 
 const Tetris = () => {
-  const [dropTime, setDropTime] = useState(null);
+  const [dropTime, setDropTime] = useState<number | null>(null);
   const [gameOver, setGameOver] = useState(false);
   const [music, setMusic] = useState(false);
   const [play,{stop}] = useSound(TetrisMusic,{volume : 0.1})
@@ -38,7 +37,7 @@ const Tetris = () => {
   const [score, setScore, rows, setRows, level, setLevel] =
     useGameStatus(rowsCleared);
   const [grid] = useNextgrid();
-  const movePlayer = (dir) => {
+  const movePlayer = (dir: number) => {
     if (!checkCollision(player, stage, { x: dir, y: 0 })) {
       updatePlayerPos({ x: dir, y: 0 });
     }
@@ -89,7 +88,7 @@ const Tetris = () => {
     }
   };
 
-  const keyUp = ({ code }) => {
+  const keyUp = ({ code }: { code: string }) => {
     if (!gameOver) {
       if (code === "ArrowDown") {
         setDropTime(1000 / (level + 1) + 200);
@@ -102,7 +101,7 @@ const Tetris = () => {
     drop();
   };
 
-  const move = ({ code }) => {
+  const move = ({ code }: { code: string }) => {
     if (!gameOver) {
       if (code === "ArrowLeft") {
         movePlayer(-1);
@@ -118,12 +117,12 @@ const Tetris = () => {
 
   useInterval(() => {
     drop();
-  }, dropTime);
+  }, dropTime!);
 
   return (
     <StyledTetrisWrapper
       role="button"
-      tabIndex="0"
+      tabIndex={0}
       onKeyUp={keyUp}
       onKeyDown={(e) => move(e)}
     >

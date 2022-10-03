@@ -31,4 +31,5 @@ export const TETROMINOS = {
   },
 };
 
+export type tetrokey = ['I', 'J', 'L', 'O', 'S', 'T', 'Z']
 

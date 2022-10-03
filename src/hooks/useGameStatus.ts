@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
-export const useGameStatus = (rowsCleared) => {
+export const useGameStatus = (rowsCleared: number) => {
   const [score, setScore] = useState(0);
   const [rows, setRows] = useState(0);
   const [level, setLevel] = useState(0);
@@ -21,5 +21,5 @@ export const useGameStatus = (rowsCleared) => {
     calcScore();
   }, [calcScore, rowsCleared, score]);
 
-  return [score, setScore, rows, setRows, level, setLevel];
+  return [score, setScore, rows, setRows, level, setLevel] as const;
 };

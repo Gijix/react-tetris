@@ -13,25 +13,25 @@ export const useTetromino = () => {
     "T",
     "Z",
   ]);
-  const shuffle = (array) => {
+  function shuffle<T>(array: T[]) {
     let tab = array.slice();
     for (let i = 0; i < array.length; i++) {
       array[i] = tab.splice(Math.floor(Math.random() * tab.length), 1)[0];
     }
     return array;
   };
-  const getTetromino = useCallback ((count) => {
+  const getTetromino = useCallback (() => {
     
     if (count <= 6) {
      
       setCount(count + 1 );
-      return TETROMINOS[tetromino[count]];
+      return (TETROMINOS as Record<string, any>)[tetromino[count]];
      
     } else {
       setTetromino(shuffle(tetromino));
       setCount(1);
-      return TETROMINOS[tetromino[0]];
+      return (TETROMINOS as Record<string, any>)[tetromino[0]];
     }
   },[tetromino]);
-  return [getTetromino, count];
+  return [getTetromino, count] as const;
 };

@@ -11,13 +11,11 @@ export const StyledNextShape = styled.div`
   width: 100%;
   height : 189px;
   border-radius: 20px;
-  color: ${(props) => (props.gameOver ? "red" : "#999")};
-  background: #000;
   font-family: Pixel, Arial, Helvetica, sans-serif;
   font-size: 0.8rem;
 `;
 
-export const StyledNextgrid = styled.div`
+export const StyledNextgrid = styled.div<{ height: number, width:number }>`
   display: grid;
   grid-template-rows: repeat(
     ${props => props.height},

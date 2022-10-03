@@ -1,8 +1,8 @@
 import { StyledNextShape, StyledNextgrid } from "./styles/StyledNextShape";
 import Cell from "./Cell";
-import React from 'react'
+import { FC } from 'react'
 
-const NextShape = ({ nextGrid }) => {
+const NextShape: FC<{ nextGrid: [number, string][][]}> = ({ nextGrid }) => {
   return (
     <StyledNextShape>
       <StyledNextgrid width={nextGrid[0].length} height={nextGrid.length}>
