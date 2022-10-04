@@ -16,7 +16,7 @@ export const usePlayer = () => {
     tetromino: TETROMINOS[0].shape,
     collided: false,
   });
-  const [getTetromino, count] = useTetromino();
+  const [getTetro, count, updateNextTetromino] = useTetromino();
   // const [isLoading]
   // useEffect(() => {
 
@@ -61,10 +61,11 @@ export const usePlayer = () => {
   const resetPlayer = useCallback(() => {
     setPlayer({
       pos: { x: STAGE_WIDTH / 2 - 2, y: 0 },
-      tetromino: getTetromino().shape,
+      tetromino: getTetro.shape,
       collided: false,
     });
-  }, [getTetromino]);
+    updateNextTetromino(count)
+  }, [getTetro, updateNextTetromino, count]);
 
-  return [player, updatePlayerPos, resetPlayer, playerRotate] as const;
+  return [player, updatePlayerPos, resetPlayer, playerRotate, getTetro] as const;
 };

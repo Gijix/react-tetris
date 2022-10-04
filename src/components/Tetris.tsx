@@ -10,7 +10,6 @@ import { usePlayer } from "../hooks/usePlayer";
 import { useStage } from "../hooks/useStage";
 import { useInterval } from "../hooks/useInterval";
 import { useGameStatus } from "../hooks/useGameStatus";
-import { useNextgrid } from "../hooks/useNextGrid";
 import { useSound } from "use-sound";
 
 // Components
@@ -32,11 +31,11 @@ const Tetris = () => {
   const [play,{stop}] = useSound(TetrisMusic,{volume : 0.1})
   const [icon,setIcon] = useState(stopSound)
 
-  const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer();
+  const [player, updatePlayerPos, resetPlayer, playerRotate, nextTetro] = usePlayer();
   const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
   const [score, setScore, rows, setRows, level, setLevel] =
     useGameStatus(rowsCleared);
-  const [grid] = useNextgrid();
+
   const movePlayer = (dir: number) => {
     if (!checkCollision(player, stage, { x: dir, y: 0 })) {
       updatePlayerPos({ x: dir, y: 0 });
@@ -50,7 +49,7 @@ const Tetris = () => {
       setIcon(stopSound)
       stop()
     }
-  }, [music]);
+  }, [music, play, stop]);
 
   const inverseMusic = () => {
     setMusic(!music)
@@ -140,7 +139,7 @@ const Tetris = () => {
           )}
           <Display text={`Score: ${score}`} />
           <StartButton callback={startGame} />
-          <NextShape nextGrid={grid} player={player} />
+          <NextShape nextTetro={nextTetro} />
         </aside>
       </StyledTetris>
     </StyledTetrisWrapper>

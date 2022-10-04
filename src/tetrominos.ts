@@ -1,4 +1,19 @@
-export const TETROMINOS = {
+export interface Tetro {
+  shape: (string | 0 )[][],
+  color: string
+}
+
+export const TETROMINOS: {
+  0: Tetro
+  I: Tetro
+  J: Tetro
+  L: Tetro
+  O: Tetro
+  S: Tetro
+  T: Tetro
+  Z: Tetro,
+  grid:  Record<any,any>
+} = {
   grid : {},
   0: { shape: [[0]], color: '0, 0, 0' },
   I: {
@@ -32,8 +47,5 @@ export const TETROMINOS = {
 };
 
 export type tetrokey = 'I' | 'J' | 'L' | 'O' | 'S' | 'T' | 'Z'
-export interface Tetro {
-  shape: (string | 0 )[][],
-  color: string
-}
+
 

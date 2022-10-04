@@ -1,14 +1,14 @@
 import { StyledNextShape, StyledNextgrid } from "./styles/StyledNextShape";
 import Cell from "./Cell";
 import { FC } from 'react'
-import { IPlayer } from "../hooks/usePlayer";
+import { Tetro } from "../tetrominos";
 
-const NextShape: FC<{ nextGrid: [number, string][][], player: IPlayer }> = ({ nextGrid, player }) => {
+const NextShape: FC<{ nextTetro: Tetro }> = ({ nextTetro }) => {
   return (
     <StyledNextShape>
-      <StyledNextgrid width={nextGrid[0].length} height={nextGrid.length}>
-        {nextGrid.map((row) =>
-          row.map((cell, x) => <Cell key={x} type={cell[0]} />)
+      <StyledNextgrid width={nextTetro.shape.length} height={nextTetro.shape[0].length}>
+        {nextTetro.shape.map((row) =>
+          row.map((type, x) => <Cell key={x} type={type} />)
         )}
       </StyledNextgrid>
     </StyledNextShape>
