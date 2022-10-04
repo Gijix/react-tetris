@@ -101,16 +101,17 @@ const Tetris = () => {
   };
 
   const move = ({ code }: { code: string }) => {
-    if (!gameOver) {
-      if (code === "ArrowLeft") {
-        movePlayer(-1);
-      } else if (code === "ArrowRight") {
-        movePlayer(1);
-      } else if (code === "ArrowDown") {
-        dropPlayer();
-      } else if (code === "ArrowUp") {
-        playerRotate(stage, 1);
-      }
+    switch (code) {
+      case 'ArrowLeft': movePlayer(-1)
+      break;
+      case 'ArrowRight': movePlayer(1)
+      break;
+      case 'ArrowDown': dropPlayer ()
+      break;
+      case 'ArrowUp': playerRotate(stage, 1)
+      break;
+      default:
+      break;
     }
   };
 

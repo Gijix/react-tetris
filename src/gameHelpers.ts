@@ -3,19 +3,22 @@ export const STAGE_WIDTH = 12;
 export const STAGE_HEIGHT = 20;
 export const NEXT_GRID_SIDE = 4
 
-export function createStage (): [number, string][][] {
+export type ICell = [number, string]
+export type IGrid =  ICell[][]
+
+export function createStage (): IGrid {
   return Array.from(Array(STAGE_HEIGHT), () =>
     new Array(STAGE_WIDTH).fill([0, 'clear']),
   ) 
 };
 
-export function createNextGrid (): [number, string][][] {
+export function createNextGrid (): IGrid {
   return Array.from(Array(NEXT_GRID_SIDE), () =>
     new Array(NEXT_GRID_SIDE).fill([0, 'clear']), 
   )
 };
 
-export const checkCollision = (player: IPlayer, stage: [number, string][][], { x: moveX, y: moveY }: { x: number, y : number}) => {
+export const checkCollision = (player: IPlayer, stage: IGrid, { x: moveX, y: moveY }: { x: number, y : number}) => {
   for (let y = 0; y < player.tetromino.length; y += 1) {
     for (let x = 0; x < player.tetromino[y].length; x += 1) {
       // 1. Check that we're on an actual Tetromino cell

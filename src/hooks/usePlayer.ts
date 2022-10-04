@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 
 import { TETROMINOS } from "../tetrominos";
 import { useTetromino } from "./useTetromino";
-import { checkCollision, STAGE_WIDTH } from "../gameHelpers";
+import { checkCollision, IGrid, STAGE_WIDTH } from "../gameHelpers";
 
 export interface IPlayer {
   pos: { x: number, y: number}
@@ -31,7 +31,7 @@ export const usePlayer = () => {
     return rotatedTetro.reverse();
   };
 
-  const playerRotate = (stage: [number, string][][], dir: number) => {
+  const playerRotate = (stage: IGrid, dir: number) => {
     const clonedPlayer = JSON.parse(JSON.stringify(player)) as typeof player;
     clonedPlayer.tetromino = rotate(clonedPlayer.tetromino, dir);
 

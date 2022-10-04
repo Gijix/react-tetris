@@ -1,6 +1,6 @@
 import { StyledNextShape, StyledNextgrid } from "./styles/StyledNextShape";
 import Cell from "./Cell";
-import { FC } from 'react'
+import { FC, memo } from 'react'
 import { Tetro } from "../tetrominos";
 
 const NextShape: FC<{ nextTetro: Tetro }> = ({ nextTetro }) => {
@@ -15,4 +15,4 @@ const NextShape: FC<{ nextTetro: Tetro }> = ({ nextTetro }) => {
   );
 };
 
-export default NextShape;
+export default  memo(NextShape);

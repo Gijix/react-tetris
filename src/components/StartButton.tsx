@@ -1,8 +1,8 @@
-import { FC} from 'react';
+import { FC, memo } from 'react';
 import { StyledStartButton } from './styles/StyledStartButton';
 
-const StartButton: FC<{ callback: () => void}> = ({ callback }) => (
+const StartButton: FC<{ callback: () => void }> = ({ callback }) => (
   <StyledStartButton onClick={callback}>Start Game</StyledStartButton>
 )
 
-export default StartButton;
+export default memo(StartButton);
