@@ -16,14 +16,11 @@ export const useTetromino = () => {
   const [nextTetromino, setNextTetromino] = useState<tetrokey[]>([...shuffle([...value])])
   
   const getCurrentTetromino = useMemo (() => {
-    console.log('in current')
-    console.log("current",tetromino[count], count, tetromino)
     return TETROMINOS[tetromino[count]]
   }, [tetromino, count])
 
   const updateNextTetro = useCallback((num: number) => {
     if (num >= 6) {
-      console.log("num >= 6", num)
       setTetromino([...nextTetromino]);
       setNextTetromino(shuffle(tetromino))
       setCount(0);
