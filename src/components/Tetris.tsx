@@ -1,18 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, FC } from "react";
+import { useSound } from "use-sound";
 
 import { createStage, checkCollision } from "../gameHelpers";
 
-// Styled Components
 import { StyledTetrisWrapper, StyledTetris } from "./styles/StyledTetris";
 
-// Custom Hooks
 import { usePlayer } from "../hooks/usePlayer";
 import { useStage } from "../hooks/useStage";
 import { useInterval } from "../hooks/useInterval";
 import { useGameStatus } from "../hooks/useGameStatus";
-import { useSound } from "use-sound";
 
-// Components
 import Stage from "./Stage";
 import Display from "./Display";
 import StartButton from "./StartButton";
@@ -24,7 +21,7 @@ import sound from "../img/sound.png";
 import stopSound from "../img/stopSound.png";
 
 
-const Tetris = () => {
+const Tetris: FC = () => {
   const [dropTime, setDropTime] = useState<number | null>(null);
   const [gameOver, setGameOver] = useState(false);
   const [music, setMusic] = useState(false);
@@ -36,11 +33,6 @@ const Tetris = () => {
   const [score, setScore, rows, setRows, level, setLevel] =
     useGameStatus(rowsCleared);
 
-  const movePlayer = (dir: number) => {
-    if (!checkCollision(player, stage, { x: dir, y: 0 })) {
-      updatePlayerPos({ x: dir, y: 0 });
-    }
-  };
   useEffect(() => {
     if (music) {
       setIcon(sound)
@@ -51,12 +43,17 @@ const Tetris = () => {
     }
   }, [music, play, stop]);
 
+  const movePlayer = (dir: number) => {
+    if (!checkCollision(player, stage, { x: dir, y: 0 })) {
+      updatePlayerPos({ x: dir, y: 0 });
+    }
+  };
+
   const inverseMusic = () => {
     setMusic(!music)
   }
 
   const startGame = () => {
-    // Reset everything
     setStage(createStage());
     setDropTime(1000);
     setMusic(true);
@@ -68,7 +65,6 @@ const Tetris = () => {
   };
 
   const drop = () => {
-    // Increase level when player has cleared 10 rows
     if (rows > (level + 1) * 10) {
       setLevel((prev) => prev + 1);
       setDropTime(1000 / (level + 1) + 200);
@@ -77,12 +73,11 @@ const Tetris = () => {
     if (!checkCollision(player, stage, { x: 0, y: 1 })) {
       updatePlayerPos({ x: 0, y: 1, collided: false });
     } else {
-      // Game Over
       if (player.pos.y < 1) {
-        console.log("GAME OVER!!!");
         setGameOver(true);
         setDropTime(null);
       }
+
       updatePlayerPos({ x: 0, y: 0, collided: true });
     }
   };

@@ -1,8 +1,7 @@
 import { StyledPlayMusic } from "./styles/StyledPlayMusic";
-import { FC } from "react";
+import { FC, memo } from "react";
 
-const PlayMusic: FC<{ inverseMusic: () => void, icon: string}> = ({ inverseMusic, icon }) => {
-
+const PlayMusic: FC<{ inverseMusic: () => void, icon: string }> = ({ inverseMusic, icon }) => {
   return (
     <StyledPlayMusic onClick={inverseMusic}>
       <img alt={icon} src={icon}></img>
@@ -10,4 +9,4 @@ const PlayMusic: FC<{ inverseMusic: () => void, icon: string}> = ({ inverseMusic
   );
 };
 
-export default PlayMusic;
+export default memo(PlayMusic);

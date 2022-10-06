@@ -17,26 +17,21 @@ export const usePlayer = () => {
     collided: false,
   });
   const [getTetro, count, updateNextTetromino] = useTetromino();
-  // const [isLoading]
-  // useEffect(() => {
-
-  // })
   const rotate = (matrix: (number | string) [][], dir: number) => {
-    // Make the rows to become cols (transpose)
     const rotatedTetro = matrix.map((_, index) =>
       matrix.map((col) => col[index])
     );
-    //reverse each row to get a rotated matrix
+
     if (dir > 0) return rotatedTetro.map((row) => row.reverse());
     return rotatedTetro.reverse();
   };
 
   const playerRotate = (stage: IGrid, dir: number) => {
     const clonedPlayer = JSON.parse(JSON.stringify(player)) as typeof player;
+    let offset = 1;
     clonedPlayer.tetromino = rotate(clonedPlayer.tetromino, dir);
 
     const pos = clonedPlayer.pos.x;
-    let offset = 1;
     while (checkCollision(clonedPlayer, stage, { x: 0, y: 0 })) {
       clonedPlayer.pos.x += offset;
       offset = -(offset + (offset > 0 ? 1 : -1));
