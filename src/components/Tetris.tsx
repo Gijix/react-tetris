@@ -1,4 +1,4 @@
-import { useEffect, useState, FC } from "react";
+import { useEffect, useState, FC, useRef } from "react";
 import { useSound } from "use-sound";
 
 import { createStage, checkCollision } from "../gameHelpers";
@@ -19,6 +19,7 @@ import PlayMusic from "./PlayMusic";
 import TetrisMusic from '../sound/TetrisMusic.wav'
 import sound from "../img/sound.png";
 import stopSound from "../img/stopSound.png";
+import Toggle from "./Toggle";
 
 
 const Tetris: FC = () => {
@@ -27,6 +28,7 @@ const Tetris: FC = () => {
   const [music, setMusic] = useState(false);
   const [play,{stop}] = useSound(TetrisMusic,{volume : 0.1})
   const [icon,setIcon] = useState(stopSound)
+  const oldDroptime = useRef<number | null>(null)
 
   const [player, updatePlayerPos, resetPlayer, playerRotate, nextTetro] = usePlayer();
   const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
@@ -110,6 +112,15 @@ const Tetris: FC = () => {
     }
   };
 
+  const toggleGame = () => {
+    if (dropTime) { 
+      oldDroptime.current = dropTime
+      setDropTime(null)
+    } else {
+      setDropTime(oldDroptime.current)
+    }
+  }
+
   useInterval(() => {
     drop();
   }, dropTime!);
@@ -123,6 +134,7 @@ const Tetris: FC = () => {
     >
       <StyledTetris>
         <PlayMusic icon={icon} inverseMusic={inverseMusic}/>
+        <Toggle toggleGame={toggleGame} dropTime={dropTime} />
         <Stage stage={stage} />
         <aside>
           {gameOver ? (

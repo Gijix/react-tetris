@@ -27,7 +27,7 @@ export const usePlayer = () => {
   };
 
   const playerRotate = (stage: IGrid, dir: number) => {
-    const clonedPlayer = JSON.parse(JSON.stringify(player)) as typeof player;
+    const clonedPlayer = JSON.parse(JSON.stringify(player)) as IPlayer;
     let offset = 1;
     clonedPlayer.tetromino = rotate(clonedPlayer.tetromino, dir);
 
