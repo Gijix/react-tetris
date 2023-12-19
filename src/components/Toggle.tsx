@@ -1,6 +1,4 @@
 import { FC, memo } from 'react';
-import { StyledCell } from './styles/StyledCell';
-import { TETROMINOS, tetrokey } from '../tetrominos';
 import { StyledPlayMusic } from './styles/StyledPlayMusic';
 
 const Toggle: FC<{ toggleGame: () => void, dropTime: number | null }> = ({ toggleGame, dropTime }) => (
